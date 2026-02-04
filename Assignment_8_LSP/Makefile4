@@ -1,0 +1,27 @@
+CC = gcc
+CFLAGS = -Wall -Wextra -O2
+TARGET = app
+OBJ = main.o helper.o
+
+all: $(TARGET)
+
+$(TARGET): $(OBJ)
+	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
+
+main.o: main.c helper.h
+	$(CC) $(CFLAGS) -c main.c
+
+helper.o: helper.c helper.h
+	$(CC) $(CFLAGS) -c helper.c
+
+run: $(TARGET)
+	./$(TARGET)
+
+clean:
+	rm -f $(OBJ) $(TARGET)
+
+help:
+	@echo "Usage:"
+	@echo "  make        -> build the application"
+	@echo "  make run    -> run the application"
+	@echo "  make clean  -> remove object files and binary"
