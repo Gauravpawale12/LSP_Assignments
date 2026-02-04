@@ -1,0 +1,27 @@
+CC = gcc
+CFLAGS = -Wall -Wextra -O2
+AR = ar
+ARFLAGS = rcs
+
+LIB = libmath.a
+OBJ = math.o
+APP = app
+
+all: lib app
+
+lib: $(LIB)
+
+$(LIB): $(OBJ)
+	$(AR) $(ARFLAGS) $(LIB) $(OBJ)
+
+math.o: math.c math.h
+	$(CC) $(CFLAGS) -c math.c
+
+app: main.o $(LIB)
+	$(CC) $(CFLAGS) main.o -L. -lmath -o $(APP)
+
+main.o: main.c math.h
+	$(CC) $(CFLAGS) -c main.c
+
+clean:
+	rm -f *.o $(LIB) $(APP)
